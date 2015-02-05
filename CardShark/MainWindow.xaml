@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        <StackPanel Height="45" VerticalAlignment="Top" Margin="10, 5, 10, 5" Orientation="Horizontal" HorizontalAlignment="Center">
+        <StackPanel Height="60" VerticalAlignment="Top" Margin="10, 5, 10, 5" Orientation="Horizontal" HorizontalAlignment="Center">
             <StackPanel Margin="0, 0, 40, 0">
                 <Label Target="{Binding ElementName=OrganizationComboBox}" VerticalAlignment="Top">Organization</Label>
                 <ComboBox x:Name="OrganizationComboBox"  Height="25" Width="120" Margin="0">
