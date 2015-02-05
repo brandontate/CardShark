@@ -14,6 +14,7 @@
             <StackPanel Margin="40,0,0,0">
                 <Label Target="{Binding ElementName=EventComboBox}" VerticalAlignment="Top">Event</Label>
                 <ComboBox x:Name="EventComboBox" Width="120" Margin="0">
+                    
                 </ComboBox>
             </StackPanel>
         </StackPanel>
