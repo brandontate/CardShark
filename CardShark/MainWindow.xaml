@@ -6,9 +6,7 @@
         <StackPanel Height="60" VerticalAlignment="Top" Margin="10, 5, 10, 5" Orientation="Horizontal" HorizontalAlignment="Center">
             <StackPanel Margin="0, 0, 40, 0">
                 <Label Target="{Binding ElementName=OrganizationComboBox}" VerticalAlignment="Top">Organization</Label>
-                <ComboBox x:Name="OrganizationComboBox" Height="25" Width="120" Margin="0">
-                    <ComboBoxItem>WWE</ComboBoxItem>
-                    <ComboBoxItem>UFC</ComboBoxItem>
+                <ComboBox x:Name="OrganizationComboBox" Height="25" Width="120" Margin="0" SelectionChanged="OrganizationComboBox_SelectionChanged">
                 </ComboBox>
             </StackPanel>
             <StackPanel Margin="40,0,0,0">

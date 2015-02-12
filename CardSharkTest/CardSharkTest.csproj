@@ -61,7 +61,6 @@
   <ItemGroup>
     <Compile Include="CardSharkUITest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StoryTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
