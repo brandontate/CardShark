@@ -63,6 +63,45 @@ namespace CardShark
             if (OrganizationComboBox.SelectedIndex != -1)
             {
                 EventComboBox.IsEnabled = true;
+                PopulateEvents(OrganizationComboBox.SelectedItem.ToString());
+            }
+        }
+
+        private void PopulateEvents(string org)
+        {
+            if (org == "WWE")
+            {
+                Event[] wwelist = new Event[]
+                {
+                    new Event(1, "Royal Rumble", "01/25/2015"),
+                    new Event(2, "Fastlane", "02/22/2015")
+                };
+
+                var eventList = new List<string>();
+
+                for (int i = 0; i < wwelist.Length; i++)
+                {
+                    eventList.Add(wwelist[i].eventName + " (" + wwelist[i].eventDate + ")");
+                }
+
+                EventComboBox.ItemsSource = eventList;
+            }
+            else if (org == "UFC")
+            {
+                Event[] ufclist = new Event[]
+                {
+                    new Event(1, "UFC 183", "01/31/2015"),
+                    new Event(2, "UFC 184", "02/28/2015")
+                };
+
+                var eventList = new List<string>();
+
+                for (int i = 0; i < ufclist.Length; i++)
+                {
+                    eventList.Add(ufclist[i].eventName + " (" + ufclist[i].eventDate + ")");
+                }
+
+                EventComboBox.ItemsSource = eventList;
             }
         }
     }
