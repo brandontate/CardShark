@@ -3,16 +3,30 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        <StackPanel Height="60" VerticalAlignment="Top" Margin="10, 5, 10, 5" Orientation="Horizontal" HorizontalAlignment="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="153*"/>
+            <RowDefinition Height="166*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Height="60" VerticalAlignment="Top" Margin="98,5,99,0" Orientation="Horizontal" HorizontalAlignment="Center">
             <StackPanel Margin="0, 0, 40, 0">
                 <Label Target="{Binding ElementName=OrganizationComboBox}" VerticalAlignment="Top">Organization</Label>
-                <ComboBox x:Name="OrganizationComboBox" Height="25" Width="120" Margin="0" SelectionChanged="OrganizationComboBox_SelectionChanged">
-                </ComboBox>
+                <ComboBox x:Name="OrganizationComboBox" Height="25" Width="120" Margin="0" SelectionChanged="OrganizationComboBox_SelectionChanged"/>
             </StackPanel>
             <StackPanel Margin="40,0,0,0">
                 <Label Target="{Binding ElementName=EventComboBox}" VerticalAlignment="Top">Event</Label>
                 <ComboBox x:Name="EventComboBox" Width="120" Margin="0" IsEnabled="False"/>
             </StackPanel>
         </StackPanel>
+        <TextBlock x:Name="accuracyBlock" HorizontalAlignment="Center" Margin="228,86,228,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="57" Width="61"/>
+        <StackPanel x:Name="cardArea" Margin="90,10,88,10" HorizontalAlignment="Center" Grid.Row="1">
+            <WrapPanel VerticalAlignment="Top">
+                <Label Content="Label" Margin="0, 0, 10, 0"/>
+                <Label Content="Vs." Margin="0"/>
+                <Label Content="Label" Margin="10, 0, 50, 0"/>
+                <ComboBox x:Name="GuessComboBox" Width="120" Margin="0, 0, 5, 0" IsEnabled="False"/>
+                <Label Content="Label" Margin="5, 0, 0, 0" HorizontalAlignment="Right"/>
+            </WrapPanel>
+        </StackPanel>
+        <Button x:Name="AddRow" Content="Add Row" HorizontalAlignment="Left" Margin="48,100,0,0" VerticalAlignment="Top" Width="75" Click="AddRow_Click"/>
     </Grid>
 </Window>

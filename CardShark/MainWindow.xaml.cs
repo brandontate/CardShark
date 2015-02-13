@@ -26,20 +26,6 @@ namespace CardShark
             PopulateOrganizationComboBox();
         }
 
-        //private void PopulateClassList()
-        //{
-        //    var classList = new List<string>();
-        //    var shapeType = typeof(Shape);
-        //    foreach (Type type in Assembly.GetAssembly(shapeType).GetTypes())
-        //    {
-        //        if (type.IsSubclassOf(shapeType) && !type.IsAbstract)
-        //        {
-        //            classList.Add(type.Name);
-        //        }
-        //    }
-        //    ShapeType.ItemsSource = classList;
-        //}
-
         private void PopulateOrganizationComboBox()
         {
             Organization[] list = new Organization[]
@@ -104,5 +90,35 @@ namespace CardShark
                 EventComboBox.ItemsSource = eventList;
             }
         }
+
+
+
+        private void AddRow_Click(object sender, RoutedEventArgs e)
+        {
+            var window = cardArea;
+            int counter = 0;
+            var wrapPanel = new WrapPanel { Name = "Match" + counter, VerticalAlignment = VerticalAlignment.Top };
+            wrapPanel.Children.Add(new Label { Content = "Label", Margin = new Thickness(0, 0, 10, 0) });
+            wrapPanel.Children.Add(new Label { Content = "Vs.", Margin = new Thickness(0) });
+            wrapPanel.Children.Add(new Label { Content = "Label", Margin = new Thickness(10, 0, 50, 0) });
+            wrapPanel.Children.Add(new ComboBox { Name = "GuessComboBox", Width = 120, Margin = new Thickness(0, 0, 5, 0), IsEnabled = false });
+            wrapPanel.Children.Add(new Label { Content = "Label", Margin = new Thickness(5, 0, 0, 0) });
+            window.Children.Add(wrapPanel);
+            counter++;
+        }
+
+
+
+        //var window = cardArea;
+        //    int counter = 0;
+        //    var wrapPanel = new WrapPanel { Name = "Match" + counter, VerticalAlignment = VerticalAlignment.Top };
+        //    wrapPanel.Children.Add(new Label { Content = "Label", Margin = new Thickness(0, 0, 10, 0) });
+        //    wrapPanel.Children.Add(new Label { Content = "Vs.", Margin = new Thickness(0) });
+        //    wrapPanel.Children.Add(new Label { Content = "Label", Margin = new Thickness(10, 0, 50, 0) });
+        //    wrapPanel.Children.Add(new ComboBox { Name = "GuessComboBox", Width = 120, Margin = new Thickness(0, 0, 5, 0), IsEnabled = false });
+        //    wrapPanel.Children.Add(new Label { Content = "Label", Margin = new Thickness(5, 0, 0, 0) });
+        //    window.Children.Add(wrapPanel);
+        //    counter++;
+
     }
 }
