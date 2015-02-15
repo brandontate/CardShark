@@ -22,22 +22,13 @@ namespace CardShark
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
-    {
+    {   
         public MainWindow()
         {
             Database.SetInitializer(new DummyData());
             InitializeComponent();
             PopulateOrganizationComboBox();
         }
-
-        //private void PopulateOrganizationComboBox()
-        //{
-        //    Organization[] list = new Organization[]
-        //    {
-        //        new Organization(1,"WWE"),
-        //        new Organization(2,"UFC")
-        //    };
-
 
         private void PopulateOrganizationComboBox()
         {
@@ -53,81 +44,105 @@ namespace CardShark
             OrganizationComboBox.ItemsSource = organizationList;
         }
 
-        //    var organizationList = new List<string>();
-
-        //    for (int i = 0; i < list.Length; i++)
-        //    {
-        //        organizationList.Add(list[i].Name);
-        //    }
-
-        //    OrganizationComboBox.ItemsSource = organizationList;
-        //}
-
         private void OrganizationComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (OrganizationComboBox.SelectedIndex != -1)
             {
+                if (EventComboBox.SelectedIndex != -1)
+                {
+                    EventComboBox.SelectedIndex = -1;
+                }
+                int orgID = GetOrganizationID(OrganizationComboBox.SelectedItem.ToString());
                 EventComboBox.IsEnabled = true;
-                PopulateEvents(OrganizationComboBox.SelectedItem.ToString());
+                PopulateEvents(orgID);
             }
         }
 
-        private void PopulateEvents(string org)
+        private void EventComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cardArea.Children.Count != 0)
+            {
+                cardArea.Children.Clear();
+            }
+            if(EventComboBox.SelectedIndex != -1) 
+            {
+                int eventID = GetEventID(EventComboBox.SelectedItem.ToString());
+                PopulateEventCard(eventID);
+            }
+        }
+
+        private int GetEventID(string eventName)
+        {
+            using (var context = new CardContext())
+            {
+                foreach (var eventItem in context.Events)
+                {
+                    if (eventName == eventItem.eventName)
+                    {
+                        return eventItem.id;
+                    }            
+                }
+            }
+            throw new ArgumentException();
+        }
+
+        private int GetOrganizationID(string company)
+        {
+            using (var context = new CardContext())
+            {
+                foreach (var organization in context.Organizations)
+	            {
+                    if (company == organization.Name)
+                    {
+                        return organization.id;
+                    }
+	            }
+            }
+            throw new ArgumentException();
+        }
+
+        private void PopulateEvents(int companyID)
         {
             var eventList = new List<string>();
             using (var context = new CardContext())
             {
-                if (org == "WWE")
+                foreach (var eventItem in context.Events)
                 {
-                    foreach (var eventitem in context.Events)
+                    if(companyID == eventItem.OrganizationID)
                     {
-                        if (eventitem.OrganizationID == 1)
-                        {
-                            eventList.Add(eventitem.eventName);
-                        }
+                        eventList.Add(eventItem.eventName);
                     }
                 }
-                else if (org == "UFC")
-                {
-                    foreach (var eventitem in context.Events)
-                    {
-                        if (eventitem.OrganizationID == 2)
-                        {
-                            eventList.Add(eventitem.eventName);
-                        }
-                    }
-                }
-                EventComboBox.ItemsSource = eventList;
             }
+
+            EventComboBox.ItemsSource = eventList;
         }
 
-
-            //var window = cardArea;
-            //int counter = 0;
-            //var wrapPanel = new WrapPanel { Name = "Match" + counter, VerticalAlignment = VerticalAlignment.Top };
-            //wrapPanel.Children.Add(new Label { Content = "Label", Margin = new Thickness(0, 0, 10, 0) });
-            //wrapPanel.Children.Add(new Label { Content = "Vs.", Margin = new Thickness(0) });
-            //wrapPanel.Children.Add(new Label { Content = "Label", Margin = new Thickness(10, 0, 50, 0) });
-            //wrapPanel.Children.Add(new ComboBox { Name = "GuessComboBox", Width = 120, Margin = new Thickness(0, 0, 5, 0), IsEnabled = false });
-            //wrapPanel.Children.Add(new Label { Content = "Label", Margin = new Thickness(5, 0, 0, 0) });
-            //window.Children.Add(wrapPanel);
-            //counter++;
-
-
-
-
-        private void AddRow_Click(object sender, RoutedEventArgs e)
+        private void PopulateEventCard(int eventID)
         {
+            var matchList = new List<string>();
             var window = cardArea;
             int counter = 0;
-            var wrapPanel = new WrapPanel { Name = "Match" + counter, VerticalAlignment = VerticalAlignment.Top };
-            wrapPanel.Children.Add(new Label { Content = "Label", Margin = new Thickness(0, 0, 10, 0) });
-            wrapPanel.Children.Add(new Label { Content = "Vs.", Margin = new Thickness(0) });
-            wrapPanel.Children.Add(new Label { Content = "Label", Margin = new Thickness(10, 0, 50, 0) });
-            wrapPanel.Children.Add(new ComboBox { Name = "GuessComboBox", Width = 120, Margin = new Thickness(0, 0, 5, 0), IsEnabled = false });
-            wrapPanel.Children.Add(new Label { Content = "Label", Margin = new Thickness(5, 0, 0, 0) });
-            window.Children.Add(wrapPanel);
-            counter++;
+            var wrapPanel = new WrapPanel { Name = "Match_" + counter, VerticalAlignment = VerticalAlignment.Top };
+            var pickComboBox = new ComboBox { Name = "GuessComboBox_" + counter, Width = 120, Margin = new Thickness(0, 0, 5, 0) };
+            using (var context = new CardContext())
+            {
+                foreach (var match in context.Matches)
+                {
+                    if (eventID == match.EventID)
+                    {
+                        wrapPanel.Children.Add(new Label { Name = "FirstOpponent_" + counter, Content = match.FirstOppenent, Margin = new Thickness(0, 0, 10, 0) });
+                        wrapPanel.Children.Add(new Label { Content = "Vs.", Margin = new Thickness(0) });
+                        wrapPanel.Children.Add(new Label { Name = "SecondOpponent_" + counter, Content = match.SecondOppenent, Margin = new Thickness(10, 0, 50, 0) });
+                        wrapPanel.Children.Add(pickComboBox);
+                        pickComboBox.Items.Add(match.FirstOppenent);
+                        pickComboBox.Items.Add(match.SecondOppenent);
+                        wrapPanel.Children.Add(new Label { Name = "FightResults_" + counter, Content = match.Winner, Margin = new Thickness(5, 0, 0, 0) });
+                        window.Children.Add(wrapPanel);
+                        counter++;
+                    }
+                }
+            }
         }
     }
 }

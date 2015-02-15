@@ -14,7 +14,7 @@
             </StackPanel>
             <StackPanel Margin="40,0,0,0">
                 <Label Target="{Binding ElementName=EventComboBox}" VerticalAlignment="Top">Event</Label>
-                <ComboBox x:Name="EventComboBox" Width="120" Margin="0" IsEnabled="False"/>
+                <ComboBox x:Name="EventComboBox" Width="120" Margin="0" IsEnabled="False" SelectionChanged="EventComboBox_SelectionChanged"/>
             </StackPanel>
         </StackPanel>
         <TextBlock x:Name="accuracyBlock" HorizontalAlignment="Center" Margin="228,86,228,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="57" Width="61"/>
@@ -22,6 +22,5 @@
             <StackPanel x:Name="cardArea" Margin="10" HorizontalAlignment="Center" Grid.Row="1" Width="497">
             </StackPanel>
         </ScrollViewer>
-        <Button x:Name="AddRow" Content="Add Row" HorizontalAlignment="Left" Margin="48,100,0,0" VerticalAlignment="Top" Width="75" Click="AddRow_Click"/>
     </Grid>
 </Window>
