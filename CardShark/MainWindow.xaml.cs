@@ -34,9 +34,17 @@ namespace CardShark
         {
             var organizationList = new List<string>();
 
+            //var query = from c in customers
+            //            where c.Country == Countries.Greece
+            //            select new { c.Name, c.City };
+
             using (var context = new CardContext())
             {
-                foreach (var organization in context.Organizations)
+                var query = from o in context.Organizations
+                            orderby o.Name
+                            select o;
+
+                foreach (var organization in query)
 	            {
                     organizationList.Add(organization.Name);
 	            }
@@ -106,7 +114,10 @@ namespace CardShark
             var eventList = new List<string>();
             using (var context = new CardContext())
             {
-                foreach (var eventItem in context.Events)
+                var query = (from e in context.Events
+                            orderby e.eventDate
+                            select e).ToList();
+                foreach (var eventItem in query)
                 {
                     if(companyID == eventItem.OrganizationID)
                     {
@@ -120,27 +131,34 @@ namespace CardShark
 
         private void PopulateEventCard(int eventID)
         {
-            var matchList = new List<string>();
-            var window = cardArea;
-            int counter = 0;
-            var wrapPanel = new WrapPanel { Name = "Match_" + counter, VerticalAlignment = VerticalAlignment.Top };
-            var pickComboBox = new ComboBox { Name = "GuessComboBox_" + counter, Width = 120, Margin = new Thickness(0, 0, 5, 0) };
             using (var context = new CardContext())
             {
-                foreach (var match in context.Matches)
+                var query = (from m in context.Matches
+                            where m.Event.id == eventID
+                            select m).ToList();
+                foreach (var match in query)
                 {
-                    if (eventID == match.EventID)
-                    {
-                        wrapPanel.Children.Add(new Label { Name = "FirstOpponent_" + counter, Content = match.FirstOppenent, Margin = new Thickness(0, 0, 10, 0) });
-                        wrapPanel.Children.Add(new Label { Content = "Vs.", Margin = new Thickness(0) });
-                        wrapPanel.Children.Add(new Label { Name = "SecondOpponent_" + counter, Content = match.SecondOppenent, Margin = new Thickness(10, 0, 50, 0) });
-                        wrapPanel.Children.Add(pickComboBox);
-                        pickComboBox.Items.Add(match.FirstOppenent);
-                        pickComboBox.Items.Add(match.SecondOppenent);
-                        wrapPanel.Children.Add(new Label { Name = "FightResults_" + counter, Content = match.Winner, Margin = new Thickness(5, 0, 0, 0) });
-                        window.Children.Add(wrapPanel);
-                        counter++;
-                    }
+                    var window = cardArea;
+                    var wrapPanel = new WrapPanel { Name = "Match_" + match.MatchID, VerticalAlignment = VerticalAlignment.Top };
+                    var pickComboBox = new ComboBox { Name = "GuessComboBox_" + match.MatchID, Width = 120, Margin = new Thickness(0, 0, 5, 0) };
+                    var second = new Label { Name = "SecondOpponent_" + match.MatchID, Content = match.SecondOppenent, Margin = new Thickness(10, 0, 50, 0) };
+                    var vs = new Label { Content = "Vs.", Margin = new Thickness(0) };
+                    var first = new Label { Name = "FirstOpponent_" + match.MatchID, Content = match.FirstOppenent, Margin = new Thickness(0, 0, 10, 0) };
+                    var winner = new Label { Name = "FightResults_" + match.MatchID, Content = match.Winner, Margin = new Thickness(5, 0, 0, 0) };
+
+                    wrapPanel.Children.Add(first);
+                    wrapPanel.Children.Add(vs);
+                    wrapPanel.Children.Add(second);
+                    wrapPanel.Children.Add(pickComboBox);
+                    pickComboBox.Items.Add(match.FirstOppenent);
+                    pickComboBox.Items.Add(match.SecondOppenent);
+                    wrapPanel.Children.Add(winner);
+                    window.Children.Add(wrapPanel);
+                    //Grid.SetColumn(first, 1);
+                    //Grid.SetColumn(vs, 2);
+                    //Grid.SetColumn(second, 3);
+                    //Grid.SetColumn(pickComboBox, 5);
+                    //Grid.SetColumn(winner, 6);
                 }
             }
         }

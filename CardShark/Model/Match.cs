@@ -15,7 +15,7 @@ namespace CardShark.Model
         public string Winner { get; set; }
 
         [Key]
-        public int EventID { get; set; }
+        public int MatchID { get; set; }
         public Event Event { get; set; }
 
         public Match()
