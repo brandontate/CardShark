@@ -1,20 +1,7 @@
 ﻿using System.Data.Entity;
-using CardShark.Model;
 
-namespace CardShark.Data
+namespace CardShark.Model
 {
-        //public class UnivercityContext : DbContext
-        //{
-        //    public DbSet<Professor> Professors { get; set; }
-        //    public DbSet<Course> Courses { get; set; }
-
-        //    protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        //    {
-        //        modelBuilder.Configurations.Add(new ProfessorConfiguration());
-        //        modelBuilder.Configurations.Add(new CourseConfiguration());
-        //    }
-        //}
-
         public class CardContext : DbContext
         {
             public DbSet<Organization> Organizations { get; set; }
@@ -23,9 +10,9 @@ namespace CardShark.Data
 
             protected override void OnModelCreating(DbModelBuilder modelBuilder)
             {
-                modelBuilder.Configurations.Add(new CardShark.Model.ModelConfigurations.OrganizationConfiguration());
-                modelBuilder.Configurations.Add(new CardShark.Model.ModelConfigurations.EventConfiguration());
-                modelBuilder.Configurations.Add(new CardShark.Model.ModelConfigurations.MatchConfiguration());
+                modelBuilder.Configurations.Add(new ModelConfigurations.OrganizationConfiguration());
+                modelBuilder.Configurations.Add(new ModelConfigurations.EventConfiguration());
+                modelBuilder.Configurations.Add(new ModelConfigurations.MatchConfiguration());
             }
         }
 }

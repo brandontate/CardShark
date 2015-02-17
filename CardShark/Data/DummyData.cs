@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using CardShark.Model;
 using System.Data.Entity;
 
-namespace CardShark.Data
+namespace CardShark.Model
 {
     public class DummyData : DropCreateDatabaseAlways<CardContext>
     {
@@ -22,7 +22,7 @@ namespace CardShark.Data
                     {
                         id = 1,
                         eventName = "Royal Rumble",
-                        eventDate = "01/25/2015",
+                        eventDate = new DateTime(2015, 01, 25, 19, 0, 0),
                         Matches = new List<Match> 
                         {
                             new Match
@@ -38,7 +38,7 @@ namespace CardShark.Data
                     {
                         id = 2,
                         eventName = "Fastlane",
-                        eventDate = "02/22/2015",
+                        eventDate = new DateTime(2015, 02, 17, 19, 0, 0),
                         Matches = new List<Match>
                         {
                             new Match
@@ -55,7 +55,7 @@ namespace CardShark.Data
                     {
                         id = 3,
                         eventName = "TLC",
-                        eventDate = "12/14/2014",
+                        eventDate = new DateTime(2014, 12, 14, 19, 0, 0),
                         Matches = new List<Match>
                         {
                             new Match
@@ -126,7 +126,7 @@ namespace CardShark.Data
                     {
                         id = 1,
                         eventName = "UFC 183",
-                        eventDate = "01/31/2015",
+                        eventDate = new DateTime(2015,01,31,19,0,0),
                         Matches = new List<Match>
                         {
                             new Match { FirstOppenent = "Anderson 'The Spider' Silva", SecondOppenent = "Nick Diaz", Winner = "Anderson 'The Spider' Silva"}
@@ -137,7 +137,7 @@ namespace CardShark.Data
                     {
                         id = 2,
                         eventName = "UFC 184",
-                        eventDate = "02/28/2015",
+                        eventDate = new DateTime(2015,02,28,19,0,0),
                         Matches = new List<Match>
                         {
                             new Match { FirstOppenent = "Masio Fullen", SecondOppenent = "Alexander Torres" },

@@ -14,7 +14,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Data.Entity;
 using CardShark.Model;
-using CardShark.Data;
 
 namespace CardShark
 {
@@ -33,10 +32,6 @@ namespace CardShark
         private void PopulateOrganizationComboBox()
         {
             var organizationList = new List<string>();
-
-            //var query = from c in customers
-            //            where c.Country == Countries.Greece
-            //            select new { c.Name, c.City };
 
             using (var context = new CardContext())
             {
@@ -122,58 +117,56 @@ namespace CardShark
                 {
                     if(companyID == eventItem.OrganizationID)
                     {
-                        eventList.Add(eventItem.eventName);
+                        var year = eventItem.eventDate.Year;
+                        var month = eventItem.eventDate.Month;
+                        var day = eventItem.eventDate.Day;
+                        string eventName = String.Format("{0}", eventItem.eventName, month, day, year);
+                        eventList.Add(eventName);
                     }
                 }
             }
-
             EventComboBox.ItemsSource = eventList;
         }
 
         private void PopulateEventCard(int eventID)
         {
+            if (cardArea.RowDefinitions.Count != 0) { cardArea.RowDefinitions.Clear(); }
             using (var context = new CardContext())
             {
-                var query = (from m in context.Matches
-                            where m.Event.id == eventID
-                            select m).ToList();
+                var query = (from e in context.Events
+                             join m in context.Matches
+                             on e.id equals m.EventID
+                             where m.EventID == eventID
+                             select new 
+                             { 
+                                 match_id = m.MatchID,
+                                 winner = m.Winner,
+                                 first = m.FirstOppenent,
+                                 second = m.SecondOppenent,
+                                 date = e.eventDate,
+                             }).ToList();
                 int rowCount = 0;
-
-                var window = cardArea;
-                //RowDefinition[] rowArr = new RowDefinition[query.Count];
-
-                //for (int i = 0; i < query.Count; i++)
-                //{
-                //    rowArr[i] = new RowDefinition();
-                //    rowArr[i].Height = new GridLength(30);
-                //    window.RowDefinitions.Add(rowArr[i]);
-                //}
-
-                if (window.RowDefinitions.Count != 0) { window.RowDefinitions.Clear(); }
 
                 foreach (var match in query)
                 {
                     var newRow = new RowDefinition();
                     newRow.Height = new GridLength(30);
-                    window.RowDefinitions.Add(newRow);
-
-                    //var wrapPanel = new WrapPanel { Name = "Match_" + match.MatchID, VerticalAlignment = VerticalAlignment.Top };
-                    var pickComboBox = new ComboBox { Name = "GuessComboBox_" + match.MatchID };
-                    var second = new Label { Name = "SecondOpponent_" + match.MatchID, Content = match.SecondOppenent };
+                    cardArea.RowDefinitions.Add(newRow);
+                    bool timeCheck = (DateTime.Now < match.date);
+                    var first = new Label { Name = "FirstOpponent_" + match.match_id, Content = match.first };
                     var vs = new Label { Content = "Vs.", Margin = new Thickness(0) };
-                    var first = new Label { Name = "FirstOpponent_" + match.MatchID, Content = match.FirstOppenent };
-                    var winner = new Label { Name = "FightResults_" + match.MatchID, Content = match.Winner };
+                    var second = new Label { Name = "SecondOpponent_" + match.match_id, Content = match.second };
+                    var pickComboBox = new ComboBox { Name = "GuessComboBox_" + match.match_id, IsEnabled = timeCheck };
+                    var winner = new Label { Name = "FightResults_" + match.match_id, Content = match.winner };
 
-                    window.Children.Add(first);
-                    window.Children.Add(vs);
-                    window.Children.Add(second);
-                    window.Children.Add(pickComboBox);
-                    pickComboBox.Items.Add(match.FirstOppenent);
-                    pickComboBox.Items.Add(match.SecondOppenent);
-                    window.Children.Add(winner);
-                    //window.Children.Add(wrapPanel);
+                    cardArea.Children.Add(first);
+                    cardArea.Children.Add(vs);
+                    cardArea.Children.Add(second);
+                    cardArea.Children.Add(pickComboBox);
+                    pickComboBox.Items.Add(match.first);
+                    pickComboBox.Items.Add(match.second);
+                    cardArea.Children.Add(winner);
 
-                    //Grid.SetColumnSpan(wrapPanel, 5);
                     Grid.SetColumn(first, 0);
                     Grid.SetColumn(vs, 1);
                     Grid.SetColumn(second, 2);
@@ -188,42 +181,5 @@ namespace CardShark
                 }
             }
         }
-
-        int counter = 0;
-
-        //private void AddRow_Click(object sender, RoutedEventArgs e)
-        //{
-        //    var window = cardArea;
-        //    var pickComboBox = new ComboBox { Name = "GuessComboBox_" + counter };
-        //    var second = new Label { Name = "SecondOpponent_" + counter, Content = "Label" };
-        //    var vs = new Label { Content = "Vs.", Margin = new Thickness(0) };
-        //    var first = new Label { Name = "FirstOpponent_" + counter, Content = "Label" };
-        //    var winner = new Label { Name = "FightResults_" + counter, Content = "Label" };
-        //    var newRow = new RowDefinition();
-        //    newRow.Height = new GridLength(30);
-
-        //    window.RowDefinitions.Add(newRow);
-
-        //    //var wrapPanel = new WrapPanel { Name = "Match" + counter, VerticalAlignment = VerticalAlignment.Top };
-        //    window.Children.Add(first);
-        //    window.Children.Add(vs);
-        //    window.Children.Add(second);
-        //    window.Children.Add(pickComboBox);
-        //    window.Children.Add(winner);
-        //    //window.Children.Add(wrapPanel);
-
-        //    Grid.SetRow(first, counter);
-        //    Grid.SetColumn(first, 0);
-        //    Grid.SetRow(vs, counter);
-        //    Grid.SetColumn(vs, 1);
-        //    Grid.SetRow(second, counter);
-        //    Grid.SetColumn(second, 2);
-        //    Grid.SetRow(pickComboBox, counter);
-        //    Grid.SetColumn(pickComboBox, 3);
-        //    Grid.SetRow(winner, counter);
-        //    Grid.SetColumn(winner, 4);
-
-        //    counter++;
-        //}
     }
 }
