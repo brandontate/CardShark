@@ -129,12 +129,7 @@ namespace CardShark.Data
                         eventDate = "01/31/2015",
                         Matches = new List<Match>
                         {
-                            new Match
-                            {
-                                FirstOppenent = "Anderson 'The Spider' Silva",
-                                SecondOppenent = "Nick Diaz",
-                                Winner = "Anderson 'The Spider' Silva"
-                            }
+                            new Match { FirstOppenent = "Anderson 'The Spider' Silva", SecondOppenent = "Nick Diaz", Winner = "Anderson 'The Spider' Silva"}
                         }
                     },
 
@@ -145,12 +140,17 @@ namespace CardShark.Data
                         eventDate = "02/28/2015",
                         Matches = new List<Match>
                         {
-                            new Match
-                            {
-                                FirstOppenent = "Rhonda Rousey",
-                                SecondOppenent = "Catt Zigano",
-                                Winner = "Rhonda Rousey"
-                            }
+                            new Match { FirstOppenent = "Masio Fullen", SecondOppenent = "Alexander Torres" },
+                            new Match { FirstOppenent = "James Krause", SecondOppenent = "Valmir Lazaro" },
+                            new Match { FirstOppenent = "Derrick Lewis", SecondOppenent = "Ruan Potts" },
+                            new Match { FirstOppenent = "Dhiego Lima", SecondOppenent = "Tim Means" },
+                            new Match { FirstOppenent = "Roman Salazar", SecondOppenent = "Norifumi Yamamoto" },
+                            new Match { FirstOppenent = "Mark Muñoz", SecondOppenent = "Roan Carneiro" },
+                            new Match { FirstOppenent = "Tony Ferguson", SecondOppenent = "Gleison Tibau" },
+                            new Match { FirstOppenent = "Alan Jouban", SecondOppenent = "Richard Walsh" },
+                            new Match { FirstOppenent = "Jake Ellenberger", SecondOppenent = "Josh Koscheck" },
+                            new Match { FirstOppenent = "Raquel Pennington", SecondOppenent = "Holly Holm" },
+                            new Match { FirstOppenent = "Rhonda Rousey", SecondOppenent = "Catt Zigano" }   
                         }
                     }
                     

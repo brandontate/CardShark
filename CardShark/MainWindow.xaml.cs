@@ -54,6 +54,7 @@ namespace CardShark
 
         private void OrganizationComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (cardArea.RowDefinitions.Count != 0) { cardArea.RowDefinitions.Clear(); }
             if (OrganizationComboBox.SelectedIndex != -1)
             {
                 if (EventComboBox.SelectedIndex != -1)
@@ -136,31 +137,93 @@ namespace CardShark
                 var query = (from m in context.Matches
                             where m.Event.id == eventID
                             select m).ToList();
+                int rowCount = 0;
+
+                var window = cardArea;
+                //RowDefinition[] rowArr = new RowDefinition[query.Count];
+
+                //for (int i = 0; i < query.Count; i++)
+                //{
+                //    rowArr[i] = new RowDefinition();
+                //    rowArr[i].Height = new GridLength(30);
+                //    window.RowDefinitions.Add(rowArr[i]);
+                //}
+
+                if (window.RowDefinitions.Count != 0) { window.RowDefinitions.Clear(); }
+
                 foreach (var match in query)
                 {
-                    var window = cardArea;
-                    var wrapPanel = new WrapPanel { Name = "Match_" + match.MatchID, VerticalAlignment = VerticalAlignment.Top };
-                    var pickComboBox = new ComboBox { Name = "GuessComboBox_" + match.MatchID, Width = 120, Margin = new Thickness(0, 0, 5, 0) };
-                    var second = new Label { Name = "SecondOpponent_" + match.MatchID, Content = match.SecondOppenent, Margin = new Thickness(10, 0, 50, 0) };
-                    var vs = new Label { Content = "Vs.", Margin = new Thickness(0) };
-                    var first = new Label { Name = "FirstOpponent_" + match.MatchID, Content = match.FirstOppenent, Margin = new Thickness(0, 0, 10, 0) };
-                    var winner = new Label { Name = "FightResults_" + match.MatchID, Content = match.Winner, Margin = new Thickness(5, 0, 0, 0) };
+                    var newRow = new RowDefinition();
+                    newRow.Height = new GridLength(30);
+                    window.RowDefinitions.Add(newRow);
 
-                    wrapPanel.Children.Add(first);
-                    wrapPanel.Children.Add(vs);
-                    wrapPanel.Children.Add(second);
-                    wrapPanel.Children.Add(pickComboBox);
+                    //var wrapPanel = new WrapPanel { Name = "Match_" + match.MatchID, VerticalAlignment = VerticalAlignment.Top };
+                    var pickComboBox = new ComboBox { Name = "GuessComboBox_" + match.MatchID };
+                    var second = new Label { Name = "SecondOpponent_" + match.MatchID, Content = match.SecondOppenent };
+                    var vs = new Label { Content = "Vs.", Margin = new Thickness(0) };
+                    var first = new Label { Name = "FirstOpponent_" + match.MatchID, Content = match.FirstOppenent };
+                    var winner = new Label { Name = "FightResults_" + match.MatchID, Content = match.Winner };
+
+                    window.Children.Add(first);
+                    window.Children.Add(vs);
+                    window.Children.Add(second);
+                    window.Children.Add(pickComboBox);
                     pickComboBox.Items.Add(match.FirstOppenent);
                     pickComboBox.Items.Add(match.SecondOppenent);
-                    wrapPanel.Children.Add(winner);
-                    window.Children.Add(wrapPanel);
-                    //Grid.SetColumn(first, 1);
-                    //Grid.SetColumn(vs, 2);
-                    //Grid.SetColumn(second, 3);
-                    //Grid.SetColumn(pickComboBox, 5);
-                    //Grid.SetColumn(winner, 6);
+                    window.Children.Add(winner);
+                    //window.Children.Add(wrapPanel);
+
+                    //Grid.SetColumnSpan(wrapPanel, 5);
+                    Grid.SetColumn(first, 0);
+                    Grid.SetColumn(vs, 1);
+                    Grid.SetColumn(second, 2);
+                    Grid.SetColumn(pickComboBox, 3);
+                    Grid.SetColumn(winner, 4);
+                    Grid.SetRow(first, rowCount);
+                    Grid.SetRow(vs, rowCount);
+                    Grid.SetRow(second, rowCount);
+                    Grid.SetRow(pickComboBox, rowCount);
+                    Grid.SetRow(winner, rowCount);
+                    rowCount++;
                 }
             }
         }
+
+        int counter = 0;
+
+        //private void AddRow_Click(object sender, RoutedEventArgs e)
+        //{
+        //    var window = cardArea;
+        //    var pickComboBox = new ComboBox { Name = "GuessComboBox_" + counter };
+        //    var second = new Label { Name = "SecondOpponent_" + counter, Content = "Label" };
+        //    var vs = new Label { Content = "Vs.", Margin = new Thickness(0) };
+        //    var first = new Label { Name = "FirstOpponent_" + counter, Content = "Label" };
+        //    var winner = new Label { Name = "FightResults_" + counter, Content = "Label" };
+        //    var newRow = new RowDefinition();
+        //    newRow.Height = new GridLength(30);
+
+        //    window.RowDefinitions.Add(newRow);
+
+        //    //var wrapPanel = new WrapPanel { Name = "Match" + counter, VerticalAlignment = VerticalAlignment.Top };
+        //    window.Children.Add(first);
+        //    window.Children.Add(vs);
+        //    window.Children.Add(second);
+        //    window.Children.Add(pickComboBox);
+        //    window.Children.Add(winner);
+        //    //window.Children.Add(wrapPanel);
+
+        //    Grid.SetRow(first, counter);
+        //    Grid.SetColumn(first, 0);
+        //    Grid.SetRow(vs, counter);
+        //    Grid.SetColumn(vs, 1);
+        //    Grid.SetRow(second, counter);
+        //    Grid.SetColumn(second, 2);
+        //    Grid.SetRow(pickComboBox, counter);
+        //    Grid.SetColumn(pickComboBox, 3);
+        //    Grid.SetRow(winner, counter);
+        //    Grid.SetColumn(winner, 4);
+
+        //    counter++;
+        //}
     }
 }
