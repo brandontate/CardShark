@@ -8,18 +8,15 @@ using System.Threading.Tasks;
 
 namespace CardShark.Model
 {
-    public partial class Match
+    public partial class Guess
     {
-        public string FirstOppenent { get; set; }
-        public string SecondOppenent { get; set; }
-        public string Winner { get; set; }
-        public List<Guess> Guesses { get; set; }
+        public string guess { get; set; }
 
         [Key]
         public int id { get; set; }
-        public int EventID { get; set; }
+        public int MatchID { get; set; }
 
-        public Match()
+        public Guess()
         {
 
         }

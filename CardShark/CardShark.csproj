@@ -83,6 +83,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\Guess.cs" />
     <Compile Include="Model\Match.cs" />
     <Compile Include="Model\ModelConfigurations.cs" />
     <Compile Include="Model\Organization.cs" />

@@ -29,22 +29,38 @@ namespace CardShark
             PopulateOrganizationComboBox();
         }
 
-        private void PopulateOrganizationComboBox()
+        private int GetEventID(string checkEvent)
         {
-            var organizationList = new List<string>();
-
             using (var context = new CardContext())
             {
-                var query = from o in context.Organizations
-                            orderby o.Name
-                            select o;
-
-                foreach (var organization in query)
-	            {
-                    organizationList.Add(organization.Name);
-	            }
+                foreach (var eventItem in context.Events)
+                {
+                    var year = eventItem.eventDate.Year;
+                    var month = eventItem.eventDate.Month;
+                    var day = eventItem.eventDate.Day;
+                    string eventName = String.Format("{0} ({1}/{2}/{3})", eventItem.eventName, month, day, year);  
+                    if (checkEvent == eventName)
+                    {
+                         return eventItem.id;
+                    }
+                }
             }
-            OrganizationComboBox.ItemsSource = organizationList;
+            throw new ArgumentException();
+        }
+
+        private int GetOrganizationID(string company)
+        {
+            using (var context = new CardContext())
+            {
+                foreach (var organization in context.Organizations)
+                {
+                    if (company == organization.Name)
+                    {
+                        return organization.id;
+                    }
+                }
+            }
+            throw new ArgumentException();
         }
 
         private void OrganizationComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -72,37 +88,59 @@ namespace CardShark
             {
                 int eventID = GetEventID(EventComboBox.SelectedItem.ToString());
                 PopulateEventCard(eventID);
+                CalculateEventAccuracy(eventID);
             }
         }
 
-        private int GetEventID(string eventName)
+        private void CalculateEventAccuracy(int eventID)
         {
             using (var context = new CardContext())
             {
-                foreach (var eventItem in context.Events)
+
+                int guessCount = (from m in context.Matches
+                            join g in context.Guesses
+                            on m.id equals g.MatchID
+                            where m.EventID == eventID
+                            select m.Guesses).Count();
+
+                if (guessCount != 0)
                 {
-                    if (eventName == eventItem.eventName)
-                    {
-                        return eventItem.id;
-                    }            
+                    int correct = (from m in context.Matches
+                                   join g in context.Guesses
+                                   on m.EventID equals eventID
+                                   where m.Winner == g.guess
+                                   select m).Count();
+
+                    int total = (from m in context.Matches
+                                 where m.EventID == eventID
+                                 select m).Count();
+
+                    string percent = string.Format("{0:0%}", ((double)correct / total));
+                    EventAccuracy.Text = percent;
+                }
+                else
+                {
+                    EventAccuracy.Text = ""; 
                 }
             }
-            throw new ArgumentException();
         }
 
-        private int GetOrganizationID(string company)
+        private void PopulateOrganizationComboBox()
         {
+            var organizationList = new List<string>();
+
             using (var context = new CardContext())
             {
-                foreach (var organization in context.Organizations)
-	            {
-                    if (company == organization.Name)
-                    {
-                        return organization.id;
-                    }
-	            }
+                var query = from o in context.Organizations
+                            orderby o.Name
+                            select o;
+
+                foreach (var organization in query)
+                {
+                    organizationList.Add(organization.Name);
+                }
             }
-            throw new ArgumentException();
+            OrganizationComboBox.ItemsSource = organizationList;
         }
 
         private void PopulateEvents(int companyID)
@@ -120,7 +158,7 @@ namespace CardShark
                         var year = eventItem.eventDate.Year;
                         var month = eventItem.eventDate.Month;
                         var day = eventItem.eventDate.Day;
-                        string eventName = String.Format("{0}", eventItem.eventName, month, day, year);
+                        string eventName = String.Format("{0} ({1}/{2}/{3})", eventItem.eventName, month, day, year);
                         eventList.Add(eventName);
                     }
                 }
@@ -139,7 +177,7 @@ namespace CardShark
                              where m.EventID == eventID
                              select new 
                              { 
-                                 match_id = m.MatchID,
+                                 match_id = m.id,
                                  winner = m.Winner,
                                  first = m.FirstOppenent,
                                  second = m.SecondOppenent,
@@ -156,7 +194,7 @@ namespace CardShark
                     var first = new Label { Name = "FirstOpponent_" + match.match_id, Content = match.first };
                     var vs = new Label { Content = "Vs.", Margin = new Thickness(0) };
                     var second = new Label { Name = "SecondOpponent_" + match.match_id, Content = match.second };
-                    var pickComboBox = new ComboBox { Name = "GuessComboBox_" + match.match_id, IsEnabled = timeCheck };
+                    var pickComboBox = new ComboBox { Name = "GuessComboBox_" + match.match_id, IsEnabled = timeCheck, Height = 25 };
                     var winner = new Label { Name = "FightResults_" + match.match_id, Content = match.winner };
 
                     cardArea.Children.Add(first);
@@ -165,6 +203,7 @@ namespace CardShark
                     cardArea.Children.Add(pickComboBox);
                     pickComboBox.Items.Add(match.first);
                     pickComboBox.Items.Add(match.second);
+                    pickComboBox.Items.Add("Not Sure");
                     cardArea.Children.Add(winner);
 
                     Grid.SetColumn(first, 0);

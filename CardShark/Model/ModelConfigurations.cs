@@ -15,7 +15,7 @@ namespace CardShark.Model
             public OrganizationConfiguration()
             {
                 Property(o => o.id);
-                Property(o => o.Name).IsRequired().HasMaxLength(50);
+                Property(o => o.Name).IsRequired().HasMaxLength(10);
             }
         }
 
@@ -37,6 +37,15 @@ namespace CardShark.Model
                 Property(m => m.SecondOppenent).IsRequired();
                 Property(m => m.Winner);
 
+            }
+        }
+
+        public class GuessConfiguration : EntityTypeConfiguration<Guess>
+        {
+            public GuessConfiguration()
+            {
+                Property(g => g.id);
+                Property(g => g.guess);
             }
         }
     }
