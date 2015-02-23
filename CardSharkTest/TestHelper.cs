@@ -7,32 +7,47 @@ using TestStack.White.UIItems;
 using TestStack.White.UIItems.ListBoxItems;
 using TestStack.White.UIItems.Finders;
 using TestStack.White.UIItems.WindowItems;
+using CardShark.Model;
 
 namespace CardSharkTest
 {
-    
-    [TestClass]
-    public class CardSharkUITest : TestHelper
+    public class TestHelper
     {
+        //private static TestContext test_context;
+        protected static Window window;
+        private static Application application;
+        //private static CardContext context;
+        private static String applicationPath;
 
-        [ClassInitialize]
-        public static void Setup(TestContext _context)
+        public static void SetupClass(TestContext _context)
         {
-            TestHelper.SetupClass(_context);
+            var applicationDir = _context.DeploymentDirectory;
+            applicationPath = Path.Combine(applicationDir, "..\\..\\..\\CardSharkTest\\bin\\Debug\\CardShark");
         }
-        
-        [TestMethod]
-        public void TestZeroState()
+
+
+        public static void TestSetup()
+        {
+            application = Application.Launch(applicationPath);
+            window = application.GetWindow("MainWindow", InitializeOption.NoCache);
+            //context = _context;
+        }
+        public static void CleanUp()
+        {
+            window.Close();
+            application.Close();
+        }
+
+        public static void ZeroState()
         {
             WPFComboBox organizationcombo = window.Get<WPFComboBox>("OrganizationComboBox");
             WPFComboBox eventcombo = window.Get<WPFComboBox>("EventComboBox");
-           
+
             Assert.IsTrue(organizationcombo.Enabled);
             Assert.IsFalse(eventcombo.Enabled);
         }
 
-        [TestMethod]
-        public void TestZeroStateComboBoxItems()
+        public static void ZeroStateComboBox()
         {
             WPFComboBox organizationcombo = window.Get<WPFComboBox>("OrganizationComboBox");
             WPFComboBox eventcombo = window.Get<WPFComboBox>("EventComboBox");
@@ -40,11 +55,6 @@ namespace CardSharkTest
             Assert.AreEqual(organizationcombo.Items[0].Text, "UFC");
             Assert.AreEqual(organizationcombo.Items[1].Text, "WWE");
         }
-
-        [ClassCleanup]
-        public static void CleanThisUp()
-        {
-            TestHelper.CleanUp();
-        }
+ 
     }
 }

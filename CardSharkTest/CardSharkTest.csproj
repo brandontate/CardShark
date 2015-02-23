@@ -66,8 +66,12 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="BDD\SubmitPrediction.cs" />
+    <Compile Include="BDD\ChangePrediction.cs" />
+    <Compile Include="BDD\DeletePrediction.cs" />
     <Compile Include="CardSharkUITest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
