@@ -1,19 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Data.Entity;
-using CardShark.Model;
+using CardShark.Data;
+
 
 namespace CardShark
 {
@@ -192,7 +184,7 @@ namespace CardShark
                     cardArea.RowDefinitions.Add(newRow);
                     bool timeCheck = (DateTime.Now < match.date);
                     var first = new Label { Name = "FirstOpponent_" + match.match_id, Content = match.first };
-                    var vs = new Label { Content = "Vs.", Margin = new Thickness(0) };
+                    var vs = new Label { Name = "vs", Content = "Vs.", Margin = new Thickness(0) };
                     var second = new Label { Name = "SecondOpponent_" + match.match_id, Content = match.second };
                     var pickComboBox = new ComboBox { Name = "GuessComboBox_" + match.match_id, IsEnabled = timeCheck, Height = 25 };
                     var winner = new Label { Name = "FightResults_" + match.match_id, Content = match.winner };

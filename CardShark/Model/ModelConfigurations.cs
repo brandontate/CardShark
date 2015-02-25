@@ -44,8 +44,9 @@ namespace CardShark.Model
         {
             public GuessConfiguration()
             {
-                Property(g => g.id);
-                Property(g => g.guess);
+                Property(g => g.id).IsRequired();
+                Property(g => g.guess).IsRequired();
+                Property(g => g.MatchID).IsRequired();
             }
         }
     }

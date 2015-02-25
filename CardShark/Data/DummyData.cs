@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using CardShark.Model;
 using System.Data.Entity;
 
-namespace CardShark.Model
+namespace CardShark.Data
 {
     public class DummyData : DropCreateDatabaseAlways<CardContext>
     {
@@ -214,6 +214,17 @@ namespace CardShark.Model
                             new Match { FirstOppenent = "Jake Ellenberger", SecondOppenent = "Josh Koscheck" },
                             new Match { FirstOppenent = "Raquel Pennington", SecondOppenent = "Holly Holm" },
                             new Match { FirstOppenent = "Rhonda Rousey", SecondOppenent = "Catt Zigano" }   
+                        }
+                    },
+
+                    new Event
+                    {
+                        id = 3,
+                        eventName = "UFC Test",
+                        eventDate = new DateTime(2015,01,31,19,0,0),
+                        Matches = new List<Match>
+                        {
+                            
                         }
                     }
                     

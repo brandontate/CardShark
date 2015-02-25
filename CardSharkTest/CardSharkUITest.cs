@@ -16,16 +16,28 @@ namespace CardSharkTest
     {
 
         [ClassInitialize]
-        public static void Setup(TestContext _context)
+        public static void UISetup(TestContext _context)
         {
             TestHelper.SetupClass(_context);
         }
-        
+
+        [TestInitialize]
+        public void UITestSetup()
+        {
+            TestHelper.TestSetup();
+        }
+
+        [TestCleanup]
+        public void UICleanThisUp()
+        {
+            TestHelper.CleanUp();
+        }
+
         [TestMethod]
         public void TestZeroState()
         {
-            WPFComboBox organizationcombo = window.Get<WPFComboBox>("OrganizationComboBox");
-            WPFComboBox eventcombo = window.Get<WPFComboBox>("EventComboBox");
+            ComboBox organizationcombo = window.Get<ComboBox>("OrganizationComboBox");
+            ComboBox eventcombo = window.Get<ComboBox>("EventComboBox");
            
             Assert.IsTrue(organizationcombo.Enabled);
             Assert.IsFalse(eventcombo.Enabled);
@@ -34,17 +46,11 @@ namespace CardSharkTest
         [TestMethod]
         public void TestZeroStateComboBoxItems()
         {
-            WPFComboBox organizationcombo = window.Get<WPFComboBox>("OrganizationComboBox");
-            WPFComboBox eventcombo = window.Get<WPFComboBox>("EventComboBox");
+            ComboBox organizationcombo = window.Get<ComboBox>("OrganizationComboBox");
+            ComboBox eventcombo = window.Get<ComboBox>("EventComboBox");
 
             Assert.AreEqual(organizationcombo.Items[0].Text, "UFC");
             Assert.AreEqual(organizationcombo.Items[1].Text, "WWE");
-        }
-
-        [ClassCleanup]
-        public static void CleanThisUp()
-        {
-            TestHelper.CleanUp();
         }
     }
 }

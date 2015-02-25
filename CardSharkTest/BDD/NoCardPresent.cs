@@ -11,28 +11,29 @@ using TestStack.White.UIItems.WindowItems;
 namespace CardSharkTest.BDD
 {
     [TestClass]
-    public class SubmitPrediction : TestHelper
+    public class NoCardPresent : TestHelper
     {
         [ClassInitialize]
-        public static void SPSetup(TestContext _context)
+        public static void NCSetup(TestContext _context)
         {
             TestHelper.SetupClass(_context);
         }
 
         [TestInitialize]
-        public void SPTestSetup()
+        public void NCTestSetup()
         {
             TestHelper.TestSetup();
         }
 
         [TestCleanup]
-        public void SPCleanThisUp()
+        public void NCCleanThisUp()
         {
             TestHelper.CleanUp();
         }
 
         [TestMethod]
-        public void ScenarioSubmitApplication()
+        [ExpectedException(typeof(AutomationException))]
+        public void ScenarioCardHasNothing()
         {
             GivenThatTheOrganizationBoxHasntBeenSelected();
             AndTheEventDropdownIsDisabled();
@@ -40,11 +41,8 @@ namespace CardSharkTest.BDD
             ThenIChooseAnOrganization("UFC");
             AndTheEventDropDownIsEnabled();
             WhenIClickOnTheEventDropDown();
-            ThenIChooseAnEvent("UFC 184 (2/28/2015)");
+            ThenIChooseAnEvent("UFC Test (1/31/2015)");
             AndIShouldSeeTheEventCard();
-            WhenIChooseAMatchWinner();
-            AndIClickTheSaveButton();
-            ThenMyPredictionShouldSave();
         }
     }
 }

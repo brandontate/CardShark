@@ -66,6 +66,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="BDD\NoCardPresent.cs" />
     <Compile Include="BDD\SubmitPrediction.cs" />
     <Compile Include="BDD\ChangePrediction.cs" />
     <Compile Include="BDD\DeletePrediction.cs" />

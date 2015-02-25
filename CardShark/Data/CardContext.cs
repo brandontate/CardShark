@@ -1,6 +1,7 @@
 ﻿using System.Data.Entity;
+using CardShark.Model;
 
-namespace CardShark.Model
+namespace CardShark.Data
 {
         public class CardContext : DbContext
         {
