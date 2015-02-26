@@ -42,7 +42,7 @@ namespace CardSharkTest.BDD
             WhenIClickOnTheEventDropDown();
             ThenIChooseAnEvent("UFC 184 (2/28/2015)");
             AndIShouldSeeTheEventCard();
-            WhenIChooseAMatchWinner();
+            WhenIChooseAMatchWinner("Rhonda Rousey");
             AndIClickTheSaveButton();
             ThenMyPredictionShouldSave();
         }

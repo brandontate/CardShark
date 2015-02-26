@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Data.Entity;
 using CardShark.Data;
+using CardShark.Repository;
 
 
 namespace CardShark
@@ -21,7 +22,7 @@ namespace CardShark
             PopulateOrganizationComboBox();
         }
 
-        private int GetEventID(string checkEvent)
+        public int GetEventID(string checkEvent)
         {
             using (var context = new CardContext())
             {
@@ -186,7 +187,7 @@ namespace CardShark
                     var first = new Label { Name = "FirstOpponent_" + match.match_id, Content = match.first };
                     var vs = new Label { Name = "vs", Content = "Vs.", Margin = new Thickness(0) };
                     var second = new Label { Name = "SecondOpponent_" + match.match_id, Content = match.second };
-                    var pickComboBox = new ComboBox { Name = "GuessComboBox_" + match.match_id, IsEnabled = timeCheck, Height = 25 };
+                    var pickComboBox = new ComboBox { Name = "GuessComboBox_" + match.match_id, IsEnabled = timeCheck, Height = 25,  };
                     var winner = new Label { Name = "FightResults_" + match.match_id, Content = match.winner };
 
                     cardArea.Children.Add(first);
@@ -211,6 +212,13 @@ namespace CardShark
                     rowCount++;
                 }
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+        //   GuessRepository _guessContext = new GuessRepository();
+        //   _guessContext.Add()
+            
         }
     }
 }

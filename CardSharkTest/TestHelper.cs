@@ -8,6 +8,11 @@ using TestStack.White.UIItems.WindowItems;
 using TestStack.White.UIItems;
 using TestStack.White.UIItems.WPFUIItems;
 using System.Diagnostics;
+using CardShark;
+using CardShark.Data;
+using System.Linq;
+using TestStack.White.UIItems.Finders;
+
 
 namespace CardSharkTest
 {
@@ -68,15 +73,57 @@ namespace CardSharkTest
             throw new NotImplementedException();
         }
 
-        public void WhenIChooseAMatchWinner()
+        public void WhenIChooseAMatchWinner(string guess)
         {
-            throw new NotImplementedException();
+            //int eventID = GetEventID(eventName);
+
+            //On Organization: UFC 
+            //Event: UFC 184 2/28/2015
+            //Choose Rhonda Rousey over Catt Zigano
+            //Submit Changes to DB
+            //Validate the submission went through properly.
+            //Maybe add random picking 'Random rnd = new Random();'
+
+
+            var GuessDropDown = window.Get<ComboBox>("GuessComboBox_23").Items;
+            foreach (var item in GuessDropDown)
+            {
+                if (item.Text == guess)
+                {
+                    item.Select();
+                }
+            }
+
+            //using (var context = new CardContext())
+            //{
+            //    var query = (from e in context.Events
+            //                 join m in context.Matches
+            //                 on e.id equals m.EventID
+            //                 where m.EventID == eventID
+            //                 select new
+            //                 {
+            //                     match_id = m.id,
+            //                     winner = m.Winner,
+            //                     first = m.FirstOppenent,
+            //                     second = m.SecondOppenent,
+            //                     date = e.eventDate,
+            //                 }).ToList();
+            //}
+            //throw new NotImplementedException();
         }
 
         public void AndIShouldSeeTheEventCard()
         {
-            var EventCard = window.Get<Label>("vs");
-            Assert.AreNotEqual(typeof(AutomationException), EventCard);
+            SearchCriteria searchCriteria = SearchCriteria.ByText("Vs.");
+            var MatchLabels = window.GetMultiple(searchCriteria);
+            Assert.AreNotEqual(0, MatchLabels.Count());
+        }
+
+        public void AndIDontSeeTheEventCard()
+        {
+            SearchCriteria searchCriteria = SearchCriteria.ByText("Vs.");
+            var MatchLabels = window.GetMultiple(searchCriteria);
+            Assert.AreEqual(0, MatchLabels.Count());
         }
 
         public void ThenIChooseAnEvent(string ItemChosen)

@@ -32,7 +32,6 @@ namespace CardSharkTest.BDD
         }
 
         [TestMethod]
-        [ExpectedException(typeof(AutomationException))]
         public void ScenarioCardHasNothing()
         {
             GivenThatTheOrganizationBoxHasntBeenSelected();
@@ -42,7 +41,7 @@ namespace CardSharkTest.BDD
             AndTheEventDropDownIsEnabled();
             WhenIClickOnTheEventDropDown();
             ThenIChooseAnEvent("UFC Test (1/31/2015)");
-            AndIShouldSeeTheEventCard();
+            AndIDontSeeTheEventCard();
         }
     }
 }
