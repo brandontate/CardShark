@@ -16,7 +16,7 @@ namespace CardShark
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static GuessRepository guessRepo = new GuessRepository();
+        
         public MainWindow()
         {
             Database.SetInitializer(new DummyData());
@@ -33,7 +33,7 @@ namespace CardShark
                 {
                     EventComboBox.SelectedIndex = -1;
                 }
-                int orgID = guessRepo.GetOrganizationID(OrganizationComboBox.SelectedItem.ToString());
+                int orgID = GuessRepository.guessRepo.GetOrganizationID(OrganizationComboBox.SelectedItem.ToString());
                 EventComboBox.IsEnabled = true;
                 PopulateEvents(orgID);
             }
@@ -47,7 +47,7 @@ namespace CardShark
             }
             if (EventComboBox.SelectedIndex != -1)
             {
-                int eventID = guessRepo.GetEventID(EventComboBox.SelectedItem.ToString());
+                int eventID = GuessRepository.guessRepo.GetEventID(EventComboBox.SelectedItem.ToString());
                 PopulateEventCard(eventID);
                 InsertEventAccuracy(eventID);
                 
@@ -56,25 +56,25 @@ namespace CardShark
 
         private void InsertEventAccuracy(int eventID)
         {
-            EventAccuracy.Text = guessRepo.CalculateEventAccuracy(eventID);
+            EventAccuracy.Text = GuessRepository.guessRepo.CalculateEventAccuracy(eventID);
         }
 
         private void PopulateOrganizationComboBox()
         {
-            var organizationList = guessRepo.GetOrganizations();
+            var organizationList = GuessRepository.guessRepo.GetOrganizations();
             OrganizationComboBox.ItemsSource = organizationList;
         }
 
         private void PopulateEvents(int companyID)
         {
-            var eventList = guessRepo.GetEvents(companyID);
+            var eventList = GuessRepository.guessRepo.GetEvents(companyID);
             EventComboBox.ItemsSource = eventList;
         }
 
         private void PopulateEventCard(int eventID)
         {
             if (cardArea.RowDefinitions.Count != 0) { cardArea.RowDefinitions.Clear(); }
-            List<Match> matches = guessRepo.GetEventCard(eventID);
+            List<Match> matches = GuessRepository.guessRepo.GetEventCard(eventID);
             int rowCount = 0;
             foreach (var match in matches)
             {
@@ -113,8 +113,8 @@ namespace CardShark
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            List<ComboBox> guessComboBoxes = guessRepo.FindCardComboBoxes(cardArea);
-            guessRepo.UpdateGuess(guessComboBoxes);
+            List<ComboBox> guessComboBoxes = GuessRepository.guessRepo.FindCardComboBoxes(cardArea);
+            GuessRepository.guessRepo.UpdateGuess(guessComboBoxes);
         }
     }
 }
