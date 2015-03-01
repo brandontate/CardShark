@@ -40,14 +40,14 @@ namespace CardShark.Model
             }
         }
 
-        public class GuessConfiguration : EntityTypeConfiguration<Guess>
-        {
-            public GuessConfiguration()
-            {
-                Property(g => g.id).IsRequired();
-                Property(g => g.guess).IsRequired();
-                Property(g => g.MatchID).IsRequired();
-            }
-        }
+        //public class GuessConfiguration : EntityTypeConfiguration<Guess>
+        //{
+        //    public GuessConfiguration()
+        //    {
+        //        Property(g => g.id).IsRequired();
+        //        Property(g => g.guess).IsRequired();
+        //        Property(g => g.MatchID).IsRequired();
+        //    }
+        //}
     }
 }

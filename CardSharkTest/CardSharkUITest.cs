@@ -36,21 +36,13 @@ namespace CardSharkTest
         [TestMethod]
         public void TestZeroState()
         {
-            ComboBox organizationcombo = window.Get<ComboBox>("OrganizationComboBox");
-            ComboBox eventcombo = window.Get<ComboBox>("EventComboBox");
-           
-            Assert.IsTrue(organizationcombo.Enabled);
-            Assert.IsFalse(eventcombo.Enabled);
+            TestHelper.ZeroState();
         }
 
         [TestMethod]
         public void TestZeroStateComboBoxItems()
         {
-            ComboBox organizationcombo = window.Get<ComboBox>("OrganizationComboBox");
-            ComboBox eventcombo = window.Get<ComboBox>("EventComboBox");
-
-            Assert.AreEqual(organizationcombo.Items[0].Text, "UFC");
-            Assert.AreEqual(organizationcombo.Items[1].Text, "WWE");
+            TestHelper.ZeroStateComboBox();
         }
     }
 }

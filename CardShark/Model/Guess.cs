@@ -8,17 +8,17 @@ using System.Threading.Tasks;
 
 namespace CardShark.Model
 {
-    public partial class Guess
+    class Guess
     {
-        public string guess { get; set; }
+        //public string guess { get; set; }
 
-        [Key]
-        public int id { get; set; }
-        public int MatchID { get; set; }
+        //[Key]
+        //public int id { get; set; }
+        //public int MatchID { get; set; }
 
-        public Guess()
-        {
+        //public Guess()
+        //{
 
-        }
+        //}
     }
 }

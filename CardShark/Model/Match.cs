@@ -13,7 +13,7 @@ namespace CardShark.Model
         public string FirstOppenent { get; set; }
         public string SecondOppenent { get; set; }
         public string Winner { get; set; }
-        public List<Guess> Guesses { get; set; }
+        public string Guess { get; set; }
 
         [Key]
         public int id { get; set; }

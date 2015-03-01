@@ -63,117 +63,64 @@ namespace CardShark.Data
                                 FirstOppenent = "The New Day",
                                 SecondOppenent = "Goldust & Stardust",
                                 Winner = "The New Day",
-                                Guesses = new List<Guess>
-                                {
-                                    new Guess
-                                    {
-                                        guess = "The New Day"
-                                    }
-                                }
+                                Guess = "The New Day"
                             },
                             new Match
                             {
                                 FirstOppenent = "Dolph Ziggler",
                                 SecondOppenent = "Luke Harper",
                                 Winner = "Dolph Ziggler",
-                                Guesses = new List<Guess>
-                                {
-                                    new Guess
-                                    {
-                                        guess = "Luke Harper"
-                                    }
-                                }
+                                Guess = "Luke Harper"
                             },
                             new Match
                             {
                                 FirstOppenent = "The Usos",
                                 SecondOppenent = "The Miz & Damien Mizdow",
                                 Winner = "The Usos",
-                                Guesses = new List<Guess>
-                                {
-                                    new Guess
-                                    {
-                                        guess = "The Usos"
-                                    }
-                                }
+                                Guess = "The Usos"
+
                             },
                             new Match
                             {
                                 FirstOppenent = "Big Show",
                                 SecondOppenent = "Erick Rowan",
                                 Winner = "Big Show",
-                                Guesses = new List<Guess>
-                                {
-                                    new Guess
-                                    {
-                                        guess = "Big Show"
-                                    }
-                                }
+                                Guess = "Big Show"
                             },
                             new Match
                             {
                                 FirstOppenent = "John Cena",
                                 SecondOppenent = "Seth Rollins",
                                 Winner = "John Cena",
-                                Guesses = new List<Guess>
-                                {
-                                    new Guess
-                                    {
-                                        guess = "John Cena"
-                                    }
-                                }
+                                Guess = "John Cena"
                             },
                             new Match
                             {
                                 FirstOppenent = "Nikki Bella",
                                 SecondOppenent = "AJ Lee",
                                 Winner = "Nikki Bella",
-                                Guesses = new List<Guess>
-                                {
-                                    new Guess
-                                    {
-                                        guess = "Nikki Bella"
-                                    }
-                                }
+                                Guess = "Nikki Bella"
                             },
                             new Match
                             {
                                 FirstOppenent = "Ryback",
                                 SecondOppenent = "Kane",
                                 Winner = "Ryback",
-                                Guesses = new List<Guess>
-                                {
-                                    new Guess
-                                    {
-                                        guess = "Ryback"
-                                    }
-                                }
+                                Guess = "Ryback"
                             },
                             new Match
                             {
                                 FirstOppenent = "Rusev",
                                 SecondOppenent = "Jack Swagger",
                                 Winner = "Rusev",
-                                Guesses = new List<Guess>
-                                {
-                                    new Guess
-                                    {
-                                        guess = "Rusev"
-                                    }
-                                }
+                                Guess = "Rusev"
                             },
                             new Match
                             {
                                 FirstOppenent = "Bray Wyatt",
                                 SecondOppenent = "Dean Ambrose",
                                 Winner = "Bray Wyatt",
-                                Guesses = new List<Guess>
-                                {
-                                    new Guess
-                                    {
-                                        guess = "Bray Wyatt"
-                                    }
-                                }
+                                Guess = "Bray Wyatt"
                             }
                         }
                     }

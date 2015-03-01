@@ -35,7 +35,7 @@ namespace CardSharkTest
         public static void TestSetup()
         {
             application = Application.Launch(applicationPath);
-            window = application.GetWindow("MainWindow", InitializeOption.NoCache);
+            window = application.GetWindow(SearchCriteria.ByText("MainWindow"), InitializeOption.NoCache);
         }
 
         public static void CleanUp()
@@ -63,14 +63,33 @@ namespace CardSharkTest
         }
 
 
-        public void ThenMyPredictionShouldSave()
+        public void ThenMyPredictionShouldSave(string guess, int matchID)
         {
-            throw new NotImplementedException();
+            string savedGuess = GetSavedGuess(matchID);
+            Assert.AreEqual(savedGuess, savedGuess);
+        }
+
+        public string GetSavedGuess(int matchID)
+        {
+            string savedGuess = "";
+            using (var context = new CardContext())
+            {
+                var query = from m in context.Matches
+                            where m.id == matchID
+                            select m;
+                foreach (var item in query)
+                {
+                    savedGuess = item.Guess;
+                }
+                return savedGuess;
+            }
         }
 
         public void AndIClickTheSaveButton()
         {
-            throw new NotImplementedException();
+            Button savebutton = window.Get<Button>("saveButton");
+
+            savebutton.Click();
         }
 
         public void WhenIChooseAMatchWinner(string guess)
