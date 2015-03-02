@@ -52,6 +52,11 @@ namespace CardShark.Repository
             _dbContext.SaveChanges();
         }
 
+        public void DeleteGuess(List<ComboBox> guessComboBoxes)
+        {
+
+        }
+
         public void UpdateGuess(List<ComboBox> guessComboBoxes)
         {
             foreach (var combobox in guessComboBoxes)
@@ -67,6 +72,7 @@ namespace CardShark.Repository
                                      select m);
                         foreach (var item in query)
                         {
+                            if (guessed == "Not Sure") { guessed = null; }
                             guessRepo.Update(item, guessed);
                         }
                     }
@@ -223,6 +229,22 @@ namespace CardShark.Repository
 
                 return percentString;
             }
+        }
+
+        public string RetrieveSavedGuess(int matchID)
+        {
+            string savedGuess = "";
+            using (var context = new CardContext())
+            {
+                var query = from m in context.Matches
+                            where m.id == matchID
+                            select m;
+                foreach (var item in query)
+                {
+                    savedGuess = item.Guess;
+                }
+            }
+            return savedGuess;
         }
     }
 }

@@ -10,12 +10,10 @@ using TestStack.White.UIItems.WindowItems;
 
 namespace CardSharkTest
 {
-    
     [TestClass]
-    public class CardSharkUITest : TestHelper
+    public class ZeroStateTest : TestHelper
     {
-
-        [ClassInitialize]
+       [ClassInitialize]
         public static void UISetup(TestContext _context)
         {
             TestHelper.SetupClass(_context);

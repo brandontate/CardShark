@@ -8,7 +8,7 @@ using System.Data.Entity;
 
 namespace CardShark.Data
 {
-    public class DummyData : DropCreateDatabaseAlways<CardContext>
+    public class DummyData : DropCreateDatabaseIfModelChanges<CardContext>
     {
         protected override void Seed(CardContext context)
         {

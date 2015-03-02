@@ -34,22 +34,22 @@ namespace CardSharkTest.BDD
         [TestMethod]
         public void ScenarioSubmitSinglePick()
         {
-            string org = "UFC";
-            string eve = "UFC 184 (2/28/2015)";
-            string pick = "Rhonda Rousey";
-            int matchID = 23;
+            //string org = "UFC";
+            //string eve = "UFC 184 (2/28/2015)";
+            //string pick = "Rhonda Rousey";
+            //int matchID = 23;
 
             GivenThatTheOrganizationBoxHasntBeenSelected();
             AndTheEventDropdownIsDisabled();
             WhenIClickOnTheOrganizationDropDown();
-            ThenIChooseAnOrganization(org);
+            ThenIChooseAnOrganization("UFC");
             AndTheEventDropDownIsEnabled();
             WhenIClickOnTheEventDropDown();
-            ThenIChooseAnEvent(eve);
+            ThenIChooseAnEvent("UFC 184 (2/28/2015)");
             AndIShouldSeeTheEventCard();
-            WhenIChooseAMatchWinner(pick);
+            WhenIChooseAMatchWinner("Rhonda Rousey");
             AndIClickTheSaveButton();
-            ThenMyPredictionShouldSave(pick, matchID);
+            ThenMyPredictionShouldSave("Rhonda Rousey", 23);
         }
     }
 }

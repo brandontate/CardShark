@@ -24,6 +24,7 @@ namespace CardShark.Repository
         //IQueryable<Event> SearchFor(Expression<Func<Event, bool>> predicate);
 
         void Delete(Match M);
+        void DeleteGuess(List<ComboBox> guessComboBoxes);
         void Update(Match M, string current);
         List<ComboBox> FindCardComboBoxes(Grid name);
         void UpdateGuess(List<ComboBox> guessComboBoxes);
@@ -47,6 +48,9 @@ namespace CardShark.Repository
         string CalculateEventAccuracy(int eventID);
         
         //Calculate Accuracy based on organization
+
+        //Get Saved Guess
+        string RetrieveSavedGuess(int matchID);
         
     }
 }

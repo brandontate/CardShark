@@ -7,6 +7,7 @@ using System.Data.Entity;
 using CardShark.Data;
 using CardShark.Repository;
 using CardShark.Model;
+using System.Windows.Documents;
 
 
 namespace CardShark
@@ -91,11 +92,30 @@ namespace CardShark
                 cardArea.Children.Add(first);
                 cardArea.Children.Add(vs);
                 cardArea.Children.Add(second);
-                cardArea.Children.Add(pickComboBox);
+                cardArea.Children.Add(pickComboBox); 
                 pickComboBox.Items.Add(match.FirstOppenent);
                 pickComboBox.Items.Add(match.SecondOppenent);
                 pickComboBox.Items.Add("Not Sure");
                 cardArea.Children.Add(winner);
+
+                
+
+                string previousGuess = GuessRepository.guessRepo.RetrieveSavedGuess(match.id);
+
+                if (previousGuess != null)
+                {
+                    pickComboBox.SelectedIndex = pickComboBox.Items.IndexOf(previousGuess);
+                }
+
+                //foreach (ListBoxItem item in pickComboBox.Items)
+                //{
+                //    if (item.Name == previousGuess)
+                //    {
+                //        item.IsSelected = true;
+                //    }
+                //}
+
+                
 
                 Grid.SetColumn(first, 0);
                 Grid.SetColumn(vs, 1);
@@ -108,6 +128,8 @@ namespace CardShark
                 Grid.SetRow(pickComboBox, rowCount);
                 Grid.SetRow(winner, rowCount);
                 rowCount++;
+
+                
             }
         }
 

@@ -12,17 +12,16 @@ using CardShark;
 using CardShark.Data;
 using System.Linq;
 using TestStack.White.UIItems.Finders;
+using CardShark.Repository;
 
 
 namespace CardSharkTest
 {
     public class TestHelper
     {
-        private static TestContext _context;
         protected static Window window;
         private static Application application;
         private static String applicationPath;
-
         
 
         public static void SetupClass(TestContext _context)
@@ -65,24 +64,13 @@ namespace CardSharkTest
 
         public void ThenMyPredictionShouldSave(string guess, int matchID)
         {
-            string savedGuess = GetSavedGuess(matchID);
-            Assert.AreEqual(savedGuess, savedGuess);
+            Assert.AreEqual(guess, GuessRepository.guessRepo.RetrieveSavedGuess(matchID));
         }
 
-        public string GetSavedGuess(int matchID)
+        public void ThenMyPredictionShouldBeRemoved(string guess, int matchID)
         {
-            string savedGuess = "";
-            using (var context = new CardContext())
-            {
-                var query = from m in context.Matches
-                            where m.id == matchID
-                            select m;
-                foreach (var item in query)
-                {
-                    savedGuess = item.Guess;
-                }
-                return savedGuess;
-            }
+            throw new NotImplementedException();
+            //Assert.AreEqual(guess, GuessRepository.guessRepo.DeleteGuess(matchID));
         }
 
         public void AndIClickTheSaveButton()
