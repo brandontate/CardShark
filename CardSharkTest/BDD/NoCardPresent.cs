@@ -43,5 +43,11 @@ namespace CardSharkTest.BDD
             ThenIChooseAnEvent("UFC Test (1/31/2015)");
             AndIDontSeeTheEventCard();
         }
+
+        [ClassCleanup]
+        public static void NCClassCleanThisUp()
+        {
+            TestHelper.CleanUp();
+        }
     }
 }

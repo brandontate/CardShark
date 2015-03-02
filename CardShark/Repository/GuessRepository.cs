@@ -46,17 +46,6 @@ namespace CardShark.Repository
             
         }
 
-        public void Delete(Model.Match M)
-        {
-            _dbContext.Matches.Remove(M);
-            _dbContext.SaveChanges();
-        }
-
-        public void DeleteGuess(List<ComboBox> guessComboBoxes)
-        {
-
-        }
-
         public void UpdateGuess(List<ComboBox> guessComboBoxes)
         {
             foreach (var combobox in guessComboBoxes)
@@ -72,15 +61,12 @@ namespace CardShark.Repository
                                      select m);
                         foreach (var item in query)
                         {
-                            if (guessed == "Not Sure") { guessed = null; }
                             guessRepo.Update(item, guessed);
                         }
                     }
                 }
             }
-        }
-
-        
+        }    
 
         public List<ComboBox> FindCardComboBoxes(Grid name)
         {
@@ -177,19 +163,19 @@ namespace CardShark.Repository
             using (var context = new CardContext())
             {
                 var matches = (from e in context.Events
-                                              join m in context.Matches
-                                              on e.id equals m.EventID
-                                              where m.EventID == eventID
-                                              select new
-                                              {
-                                                  e_ID = m.EventID,
-                                                  match_id = m.id,
-                                                  guess = m.Guess,
-                                                  winner = m.Winner,
-                                                  first = m.FirstOppenent,
-                                                  second = m.SecondOppenent,
-                                                  date = e.eventDate
-                                              }).ToList();
+                                join m in context.Matches
+                                on e.id equals m.EventID
+                                where m.EventID == eventID
+                                select new
+                                {
+                                    e_ID = m.EventID,
+                                    match_id = m.id,
+                                    guess = m.Guess,
+                                    winner = m.Winner,
+                                    first = m.FirstOppenent,
+                                    second = m.SecondOppenent,
+                                    date = e.eventDate
+                                }).ToList();
                 foreach (var match in matches)
                 {
                     eventMatches.Add(

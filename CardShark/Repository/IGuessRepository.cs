@@ -12,19 +12,7 @@ namespace CardShark.Repository
 {
     public interface IGuessRepository
     {
-        //int GetCount(); //
-        //void Add(Event E); //
-        //void Delete(Event E); //
-        //void Clear(); //
-        //IEnumerable<Event> PastEvents(); //
-        //int CalculateMonth(Event E); //
-        //IEnumerable<Event> All(); //
-        //Event GetById(int id); //
-        //Event GetByDate(string date); //
-        //IQueryable<Event> SearchFor(Expression<Func<Event, bool>> predicate);
 
-        void Delete(Match M);
-        void DeleteGuess(List<ComboBox> guessComboBoxes);
         void Update(Match M, string current);
         List<ComboBox> FindCardComboBoxes(Grid name);
         void UpdateGuess(List<ComboBox> guessComboBoxes);

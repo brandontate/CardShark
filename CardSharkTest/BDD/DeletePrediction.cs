@@ -14,19 +14,19 @@ namespace CardSharkTest.BDD
     public class DeletePrediction : TestHelper
     {
         [ClassInitialize]
-        public static void SPSetup(TestContext _context)
+        public static void DELSetup(TestContext _context)
         {
             TestHelper.SetupClass(_context);
         }
 
         [TestInitialize]
-        public void SPTestSetup()
+        public void DELTestSetup()
         {
             TestHelper.TestSetup();
         }
 
         [TestCleanup]
-        public void SPCleanThisUp()
+        public void DELCleanThisUp()
         {
             TestHelper.CleanUp();
         }
@@ -49,7 +49,13 @@ namespace CardSharkTest.BDD
             AndIShouldSeeTheEventCard();
             WhenIChooseAMatchWinner("Not Sure");
             AndIClickTheSaveButton();
-           // ThenMyPredictionShouldBeRemoved("Not Sure", 23);
+            ThenMyPredictionShouldBeRemoved(23);
+        }
+
+        [ClassCleanup]
+        public static void DELClassCleanThisUp()
+        {
+            TestHelper.CleanUp();
         }
     }
 }

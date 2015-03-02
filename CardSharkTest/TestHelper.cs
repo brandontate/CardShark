@@ -6,10 +6,6 @@ using TestStack.White.Factory;
 using TestStack.White.UIItems.ListBoxItems;
 using TestStack.White.UIItems.WindowItems;
 using TestStack.White.UIItems;
-using TestStack.White.UIItems.WPFUIItems;
-using System.Diagnostics;
-using CardShark;
-using CardShark.Data;
 using System.Linq;
 using TestStack.White.UIItems.Finders;
 using CardShark.Repository;
@@ -61,16 +57,19 @@ namespace CardSharkTest
             Assert.AreEqual(organizationcombo.Items[1].Text, "WWE");
         }
 
-
         public void ThenMyPredictionShouldSave(string guess, int matchID)
         {
             Assert.AreEqual(guess, GuessRepository.guessRepo.RetrieveSavedGuess(matchID));
         }
 
-        public void ThenMyPredictionShouldBeRemoved(string guess, int matchID)
+        public void ThenMyPredictionShouldBeRemoved(int matchID)
         {
-            throw new NotImplementedException();
-            //Assert.AreEqual(guess, GuessRepository.guessRepo.DeleteGuess(matchID));
+            Assert.IsNull(GuessRepository.guessRepo.RetrieveSavedGuess(matchID));
+        }
+
+        public void ThenMyPredictionShouldBeChange(string previousPick, string currentPick)
+        {
+            Assert.AreNotEqual(previousPick, currentPick);
         }
 
         public void AndIClickTheSaveButton()
@@ -82,16 +81,6 @@ namespace CardSharkTest
 
         public void WhenIChooseAMatchWinner(string guess)
         {
-            //int eventID = GetEventID(eventName);
-
-            //On Organization: UFC 
-            //Event: UFC 184 2/28/2015
-            //Choose Rhonda Rousey over Catt Zigano
-            //Submit Changes to DB
-            //Validate the submission went through properly.
-            //Maybe add random picking 'Random rnd = new Random();'
-
-
             var GuessDropDown = window.Get<ComboBox>("GuessComboBox_23").Items;
             foreach (var item in GuessDropDown)
             {
@@ -100,23 +89,6 @@ namespace CardSharkTest
                     item.Select();
                 }
             }
-
-            //using (var context = new CardContext())
-            //{
-            //    var query = (from e in context.Events
-            //                 join m in context.Matches
-            //                 on e.id equals m.EventID
-            //                 where m.EventID == eventID
-            //                 select new
-            //                 {
-            //                     match_id = m.id,
-            //                     winner = m.Winner,
-            //                     first = m.FirstOppenent,
-            //                     second = m.SecondOppenent,
-            //                     date = e.eventDate,
-            //                 }).ToList();
-            //}
-            //throw new NotImplementedException();
         }
 
         public void AndIShouldSeeTheEventCard()
